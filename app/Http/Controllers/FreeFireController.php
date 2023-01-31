@@ -30,6 +30,7 @@ class FreeFireController extends Controller
     public function add(Request $request)
     {
         $freeFire = new FreeFireCharactersModel;
+        $freeFireId = new FreeFireModel;
         $freeFire->name = $request->input('name');
         $freeFire->gender = $request->input('gender');
         $freeFire->price = $request->input('price');
@@ -39,6 +40,9 @@ class FreeFireController extends Controller
         $freeFire->ability = $request->input('ability');
         $freeFire->story = $request->input('story');
         $freeFire->save();
+        $freeFireId->id = $freeFire->id;
+        $freeFireId->id_characters = $freeFire->id;
+        $freeFireId->save();
         return response()->json([
             'message' => 'Add Success',
             'data_menu' => $freeFire
