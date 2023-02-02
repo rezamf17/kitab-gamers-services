@@ -81,5 +81,41 @@ class FreeFireController extends Controller
         ], 201);
     }
 
+    public function update(Request $request, $id)
+    {
+        $freeFire = FreeFireCharactersModel::Find($id);
+        $freeFireId = FreeFireModel::Find($id);
+        $freeFireLevel = FreeFireCharactersLevelUpModel::Find($id);
+        $freeFire->name = $request->input('name');
+        $freeFire->gender = $request->input('gender');
+        $freeFire->price = $request->input('price');
+        $freeFire->dob = $request->input('dob');
+        $freeFire->occupation = $request->input('occupation');
+        $freeFire->hobby = $request->input('hobby');
+        $freeFire->ability = $request->input('ability');
+        $freeFire->story = $request->input('story');
+        $freeFire->save();
+        $freeFireId->id = $freeFire->id;
+        $freeFireId->id_characters = $freeFire->id;
+        $freeFireId->save();
+        foreach ($request->level_up as $key => $value) {
+            $levels = array(
+                'id' => $value['id'],
+                'id_character' => $freeFire->id,
+                'character_name' => $value['character_name'],
+                'level' => $value['level'],
+                'required_fragments' => $value['required_fragments'],
+                'desc' => $value['desc'],
+                'reward' => $value['reward'],
+            );
+            // return $levels;
+            FreeFireCharactersLevelUpModel::where('id', $value['id'])->update($levels);
+        }
+        // return $request;
+        return response()->json([
+            'message' => 'Update Success'
+        ], 201);
+    }
+
     //
 }
