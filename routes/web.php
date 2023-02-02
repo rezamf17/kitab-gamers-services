@@ -17,5 +17,5 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/free-fire', 'FreeFireController@index');
+$router->get('/free-fire-characters', 'FreeFireController@index');
 $router->post('/free-fire', 'FreeFireController@add');

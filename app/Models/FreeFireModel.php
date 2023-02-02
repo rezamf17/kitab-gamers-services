@@ -16,4 +16,5 @@ class FreeFireModel extends Model
     {
         return $this->belongsTo(FreeFireCharactersModel::class, 'id_characters');
     }
+
 }
