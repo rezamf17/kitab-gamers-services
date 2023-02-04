@@ -145,5 +145,33 @@ class FreeFireController extends Controller
         ], 201);
     }
 
+    public function restore(Request $request, $id)
+    {
+        $freeFire = FreeFireCharactersModel::onlyTrashed()->Find($id);
+        $freeFireId = FreeFireModel::onlyTrashed()->Find($id);
+
+        $freeFire->restore();
+        $freeFireId->restore();
+        foreach ($request->level_up as $key => $value) {
+            $levels = array(
+                'id' => $value['id'],
+                'id_character' => $freeFire->id,
+                'character_name' => $value['character_name'],
+                'level' => $value['level'],
+                'required_fragments' => $value['required_fragments'],
+                'desc' => $value['desc'],
+                'reward' => $value['reward'],
+            );
+            // return $levels;
+            $freeFireLevel = FreeFireCharactersLevelUpModel::onlyTrashed()->Find($value['id'])->restore();
+            // FreeFireCharactersLevelUpModel::withTrashed()->where('id', $value['id'])->get();
+        }
+        // $freeFireLevel->delete();
+
+        return response()->json([
+            'message' => 'Restore Success'
+        ], 201);
+    }
+
     //
 }
