@@ -117,5 +117,33 @@ class FreeFireController extends Controller
         ], 201);
     }
 
+    public function delete(Request $request, $id)
+    {
+        $freeFire = FreeFireCharactersModel::Find($id);
+        $freeFireId = FreeFireModel::Find($id);
+
+        $freeFire->delete();
+        $freeFireId->delete();
+        foreach ($request->level_up as $key => $value) {
+            $levels = array(
+                'id' => $value['id'],
+                'id_character' => $freeFire->id,
+                'character_name' => $value['character_name'],
+                'level' => $value['level'],
+                'required_fragments' => $value['required_fragments'],
+                'desc' => $value['desc'],
+                'reward' => $value['reward'],
+            );
+            // return $levels;
+            $freeFireLevel = FreeFireCharactersLevelUpModel::Find($value['id'])->delete();
+            // FreeFireCharactersLevelUpModel::withTrashed()->where('id', $value['id'])->get();
+        }
+        // $freeFireLevel->delete();
+
+        return response()->json([
+            'message' => 'Delete Success'
+        ], 201);
+    }
+
     //
 }

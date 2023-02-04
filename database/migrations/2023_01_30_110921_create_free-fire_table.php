@@ -16,8 +16,7 @@ class CreateFreeFireTable extends Migration
         Schema::create('free-fire', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_characters')->constrained('free-fire-characters')->onUpdate('cascade')->onDelete('cascade');
-            // $table->string('name');
-            // $table->string('airline');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

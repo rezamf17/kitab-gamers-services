@@ -24,6 +24,7 @@ class CreateFreeFireCharactersTable extends Migration
             $table->string('ability');
             $table->text('story');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

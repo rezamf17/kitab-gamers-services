@@ -22,6 +22,7 @@ class CreateLevelupCharacters extends Migration
             $table->string('desc')->nullable();
             $table->string('reward')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

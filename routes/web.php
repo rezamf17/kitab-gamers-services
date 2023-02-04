@@ -20,3 +20,4 @@ $router->get('/', function () use ($router) {
 $router->get('/free-fire-characters', 'FreeFireController@index');
 $router->post('/free-fire', 'FreeFireController@add');
 $router->put('/free-fire/{id}', 'FreeFireController@update');
+$router->delete('/free-fire/{id}', 'FreeFireController@delete');
